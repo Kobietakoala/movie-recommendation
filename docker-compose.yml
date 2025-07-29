@@ -9,6 +9,4 @@ services:
       - "8000:8000"
     volumes:
       - ./:/var/www/html
-      - /var/www/html/vendor  # Wyklucz vendor z volume mount
-      - /var/www/html/var     # Wyklucz cache z volume mount
 
