@@ -34,10 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/",
-            "App\\Service": "src/Service",
-            "App\\Controller": "src/Controller",
-            "App\\Data": "src/Data"
+            "App\\": "src/"
         }
     },
     "autoload-dev": {
