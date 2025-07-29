@@ -1,0 +1,61 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service;
+
+use App\Traits\ErrorMessagesTrait;
+
+class RecommendationService
+{
+    use ErrorMessagesTrait;
+    private array $movies = [];
+    private bool $moviesLoaded = false;
+    protected const string MOVIES_FILE_PATH = __DIR__ . '/../../data/movies.php';
+
+    private function loadMovies(): void
+    {
+        if ($this->moviesLoaded) {
+            return;
+        }
+
+        if (!file_exists(self::MOVIES_FILE_PATH)) {
+            throw new \RuntimeException($this->getErrorMessage('movies_not_found'));
+        }
+
+        include self::MOVIES_FILE_PATH;
+        
+        if (!isset($movies) || !is_array($movies)) {
+            throw new \RuntimeException('Nie znaleziono tablicy $movies w pliku movies.php');
+        }
+
+        $this->movies = array_unique($movies);
+        $this->moviesLoaded = true;
+    }
+
+    public function getRandomMovies(int $count = 3): array
+    {
+        $this->loadMovies();
+
+        if (empty($this->movies)) {
+            return [];
+        }
+
+        if ($count >= count($this->movies)) {
+            return $this->movies;
+        }
+
+        $randomKeys = array_rand($this->movies, $count);
+
+        if (!is_array($randomKeys)) {
+            $randomKeys = [$randomKeys];
+        }
+
+        $randomMovies = [];
+        foreach ($randomKeys as $key) {
+            $randomMovies[] = $this->movies[$key];
+        }
+
+        return $randomMovies;
+    }
+}
