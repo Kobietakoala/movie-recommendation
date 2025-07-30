@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Traits\ErrorMessagesTrait;
 use InvalidArgumentException;
+use Monolog\Logger;
 use RuntimeException;
 use Psr\Log\LoggerInterface;
 
@@ -127,7 +128,9 @@ class RecommendationService
 
         $filteredMovies = array_filter($this->movies, function($movie) {
             if (empty($movie) || !is_string($movie)) {
-                $this->logger->debug('Skipping invalid movie entry', ['movie' => $movie]);
+                if ($this->logger instanceof Logger && $this->logger->isHandling(Logger::DEBUG)) {
+                    $this->logger->debug('Skipping invalid movie entry', ['movie' => $movie]);
+                }
                 return false;
             }
 
@@ -174,7 +177,9 @@ class RecommendationService
 
         $filteredMovies = array_filter($this->movies, function($movie) {
             if (!is_string($movie) || trim($movie) === '') {
-                $this->logger->debug('Skipping invalid or empty movie', ['movie' => $movie]);
+                if ($this->logger instanceof Logger && $this->logger->isHandling(Logger::DEBUG)) {
+                    $this->logger->debug('Skipping invalid movie entry', ['movie' => $movie]);
+                }
                 return false;
             }
 

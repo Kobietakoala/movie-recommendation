@@ -137,19 +137,6 @@ class ErrorMessagesTraitTest extends TestCase
     }
 
     /**
-     * Data provider for all valid error keys
-     */
-    public static function validErrorKeysProvider(): array
-    {
-        return [
-            ['movies_not_found'],
-            ['invalid_movies_format'],
-            ['non_positive_movie_count'],
-            ['internal'],
-        ];
-    }
-
-    /**
      * Data provider for all error keys with expected messages
      */
     public static function allErrorKeysProvider(): array
