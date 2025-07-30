@@ -118,19 +118,15 @@ class ErrorMessagesTraitTest extends TestCase
 
     public function testAllDefinedKeysReturnUniqueMessages(): void
     {
-        $keys = [
-            'movies_not_found',
-            'invalid_movies_format',
-            'non_positive_movie_count',
-            'internal'
-        ];
         $messages = [];
+
+        $keys = array_column(array_filter(self::allErrorKeysProvider(), fn($item) => $item[0] !== 'unknown_key'), 0);
 
         foreach ($keys as $key) {
             $messages[$key] = $this->traitObject->getErrorMessagePublic($key);
         }
 
-        $this->assertCount(4, array_unique($messages));
+        $this->assertCount(count($keys), array_unique($messages));
         foreach ($messages as $message) {
             $this->assertNotEquals('Unknown error', $message);
         }
