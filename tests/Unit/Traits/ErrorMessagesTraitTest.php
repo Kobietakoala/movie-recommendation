@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Traits;
 
 use App\Traits\ErrorMessagesTrait;
-use Monolog\Test\TestCase;
+use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 class ErrorMessagesTraitTest extends TestCase
