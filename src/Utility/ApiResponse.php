@@ -17,23 +17,22 @@ class ApiResponse
         ], $statusCode);
     }
 
-    public static function error(string $message = 'Error', mixed $errors = null, int $statusCode = 400): JsonResponse
+    public static function error(string $message = 'Error', int $statusCode = 400): JsonResponse
     {
         return new JsonResponse([
             'success' => false,
             'message' => $message,
-            'errors' => $errors,
         ], $statusCode);
     }
 
     public static function notFound(string $message = 'Resource not found'): JsonResponse
     {
-        return self::error($message, null, 404);
+        return self::error($message, 404);
     }
 
     public static function serverError(string $message = 'Internal server error'): JsonResponse
     {
-        return self::error($message, null, 500);
+        return self::error($message, 500);
     }
 
 }

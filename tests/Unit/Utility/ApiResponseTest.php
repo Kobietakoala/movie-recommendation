@@ -76,27 +76,15 @@ class ApiResponseTest extends TestCase
     public function testErrorWithCustomParameters(): void
     {
         $message = 'Validation failed';
-        $errors = ['email' => 'Email is required'];
         $statusCode = 422;
 
-        $response = ApiResponse::error($message, $errors, $statusCode);
+        $response = ApiResponse::error($message, $statusCode);
 
         $this->assertEquals($statusCode, $response->getStatusCode());
         
         $content = json_decode($response->getContent(), true);
         $this->assertFalse($content['success']);
         $this->assertEquals($message, $content['message']);
-        $this->assertEquals($errors, $content['errors']);
-    }
-
-    public function testErrorWithStringErrors(): void
-    {
-        $errors = 'Database connection failed';
-
-        $response = ApiResponse::error('Database error', $errors);
-
-        $content = json_decode($response->getContent(), true);
-        $this->assertEquals($errors, $content['errors']);
     }
 
     public function testNotFoundWithDefaultMessage(): void
@@ -175,7 +163,6 @@ class ApiResponseTest extends TestCase
 
         $this->assertArrayHasKey('success', $content);
         $this->assertArrayHasKey('message', $content);
-        $this->assertArrayHasKey('errors', $content);
     }
 
     #[DataProvider('successStatusCodeProvider')] public function testSuccessWithDifferentStatusCodes(int $statusCode): void
@@ -197,7 +184,7 @@ class ApiResponseTest extends TestCase
 
     #[DataProvider('errorStatusCodeProvider')] public function testErrorWithDifferentStatusCodes(int $statusCode): void
     {
-        $response = ApiResponse::error('Test error', null, $statusCode);
+        $response = ApiResponse::error('Test error', $statusCode);
 
         $this->assertEquals($statusCode, $response->getStatusCode());
     }
