@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Traits\ErrorMessagesTrait;
+use InvalidArgumentException;
+use RuntimeException;
 
 class RecommendationService
 {
@@ -15,6 +17,7 @@ class RecommendationService
 
     /**
      * @return void
+     * @throws RuntimeException
      */
     private function loadMovies(): void
     {
@@ -23,13 +26,13 @@ class RecommendationService
         }
 
         if (!file_exists(self::MOVIES_FILE_PATH)) {
-            throw new \RuntimeException($this->getErrorMessage('movies_not_found'));
+            throw new RuntimeException($this->getErrorMessage('movies_not_found'));
         }
 
-        include self::MOVIES_FILE_PATH;
+        $movies = include self::MOVIES_FILE_PATH;
         
-        if (!isset($movies) || !is_array($movies)) {
-            throw new \RuntimeException($this->getErrorMessage('invalid_movies_format'));
+        if (!is_array($movies)) {
+            throw new RuntimeException($this->getErrorMessage('invalid_movies_format'));
         }
 
         $this->movies = array_unique($movies);
@@ -39,6 +42,7 @@ class RecommendationService
     /**
      * @param int $count
      * @return array
+     * @throws InvalidArgumentException
      */
     public function getRandomMovies(int $count = 3): array
     {
@@ -46,6 +50,10 @@ class RecommendationService
 
         if (empty($this->movies)) {
             return [];
+        }
+
+        if ($count <= 0) {
+            throw new InvalidArgumentException($this->getErrorMessage('non_positive_movie_count'));
         }
 
         if ($count >= count($this->movies)) {
