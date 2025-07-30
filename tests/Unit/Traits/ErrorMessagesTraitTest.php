@@ -70,12 +70,13 @@ class ErrorMessagesTraitTest extends TestCase
     }
 
     #[DataProvider('allErrorKeysProvider')]
-    public function testShouldReturnNonEmptyStringForValidKeys(string $key): void
+    public function testShouldReturnNonEmptyStringForValidKeys(string $key, string $expectedMessage): void
     {
         $result = $this->traitObject->getErrorMessagePublic($key);
 
         $this->assertNotEmpty($result);
         $this->assertIsString($result);
+        $this->assertEquals($expectedMessage, $result);
     }
 
     #[DataProvider('allErrorKeysProvider')]
