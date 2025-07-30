@@ -15,12 +15,11 @@ trait ErrorMessagesTrait
     protected function getErrorMessage(string $key): string
     {
         return match ($key) {
-            'movies_not_found' => 'Plik data/movies.php nie został znaleziony',
-            'invalid_movies_format' => 'Nie znaleziono tablicy $movies w pliku movies.php',
-            'non_positive_movie_count' => 'Liczba filmów do pobrania musi być większa niż 0',
-            'internal' => 'Wystąpił nieoczekiwany błąd.',
-            'missing_param' => 'Brak wymaganego parametru: %param%',
-            default => 'Nieznany błąd'
+            'movies_not_found' => 'File data/movies.php not found',
+            'invalid_movies_format' => 'Could not find $movies array in movies.php file',
+            'non_positive_movie_count' => 'Number of movies to retrieve must be greater than 0',
+            'internal' => 'An unexpected error occurred.',
+            default => 'Unknown error'
         };
     }
 }
