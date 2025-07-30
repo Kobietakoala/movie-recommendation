@@ -12,10 +12,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MovieRecommendationController extends AbstractController
 {
+    /**
+     * @param RecommendationService $recommendationService
+     */
     public function __construct(
         private readonly RecommendationService $recommendationService
     ){}
 
+    /**
+     * @return JsonResponse
+     */
     #[Route('/random-movies', name: 'random_movies', methods: ['GET'])]
     public function getRandomMovies(): JsonResponse
     {
@@ -26,6 +32,10 @@ class MovieRecommendationController extends AbstractController
             return ApiResponse::error($e->getMessage());
         }
     }
+
+    /**
+     * @return JsonResponse
+     */
     #[Route('/movies-with-w-even-length', name: 'movies_with_w_even_length', methods: ['GET'])]
     public function getMoviesWithWEvenLength(): JsonResponse
     {
@@ -36,6 +46,10 @@ class MovieRecommendationController extends AbstractController
             return ApiResponse::error($e->getMessage());
         }
     }
+
+    /**
+     * @return JsonResponse
+     */
     #[Route('/multi-word-movies', name: 'multi_word_movies', methods: ['GET'])]
     public function getMultiWordMovies(): JsonResponse
     {
