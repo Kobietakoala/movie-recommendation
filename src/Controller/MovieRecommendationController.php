@@ -21,16 +21,20 @@ class MovieRecommendationController extends AbstractController
     {
         try {
             $movies = $this->recommendationService->getRandomMovies();
-        }catch (\RuntimeException $e) {
+            return ApiResponse::success($movies);
+        }catch (\Throwable $e) {
             return ApiResponse::error($e->getMessage());
         }
-
-        return ApiResponse::success($movies);
     }
     #[Route('/movies-with-w-even-length', name: 'movies_with_w_even_length', methods: ['GET'])]
     public function getMoviesWithWEvenLength(): JsonResponse
     {
-        return ApiResponse::success();
+        try {
+            $movies = $this->recommendationService->getMoviesWithWEvenLength();
+            return ApiResponse::success($movies);
+        }catch (\Throwable $e) {
+            return ApiResponse::error($e->getMessage());
+        }
     }
     #[Route('/multi-word-movies', name: 'multi_word_movies', methods: ['GET'])]
     public function getMultiWordMovies(): JsonResponse

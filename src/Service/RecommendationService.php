@@ -13,6 +13,9 @@ class RecommendationService
     private bool $moviesLoaded = false;
     protected const string MOVIES_FILE_PATH = __DIR__ . '/../../data/movies.php';
 
+    /**
+     * @return void
+     */
     private function loadMovies(): void
     {
         if ($this->moviesLoaded) {
@@ -26,13 +29,17 @@ class RecommendationService
         include self::MOVIES_FILE_PATH;
         
         if (!isset($movies) || !is_array($movies)) {
-            throw new \RuntimeException('Nie znaleziono tablicy $movies w pliku movies.php');
+            throw new \RuntimeException($this->getErrorMessage('invalid_movies_format'));
         }
 
         $this->movies = array_unique($movies);
         $this->moviesLoaded = true;
     }
 
+    /**
+     * @param int $count
+     * @return array
+     */
     public function getRandomMovies(int $count = 3): array
     {
         $this->loadMovies();
@@ -58,4 +65,32 @@ class RecommendationService
 
         return $randomMovies;
     }
+
+    /**
+     * @return array
+     */
+    public function getMoviesWithWEvenLength(): array
+    {
+        $this->loadMovies();
+
+        if (empty($this->movies)) {
+            return [];
+        }
+
+        return array_filter($this->movies, function($movie) {
+            if (empty($movie) || !is_string($movie)) {
+                return false;
+            }
+
+            if (strlen($movie) === 0) {
+                return false;
+            }
+
+            $startsWithW = strtolower($movie[0]) === 'w';
+            $hasEvenLength = strlen($movie) % 2 === 0;
+
+            return $startsWithW && $hasEvenLength;
+        });
+    }
+
 }
