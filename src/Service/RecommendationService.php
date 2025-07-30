@@ -93,4 +93,32 @@ class RecommendationService
         });
     }
 
+    /**
+     * @return array
+     */
+    public function getMultiWordMovies(): array
+    {
+        $this->loadMovies();
+
+        if (empty($this->movies)) {
+            return [];
+        }
+
+        return array_filter($this->movies, function($movie) {
+            if (!is_string($movie) || trim($movie) === '') {
+                return false;
+            }
+
+            $trimmedMovie = trim($movie);
+
+            if (!str_contains($trimmedMovie, ' ')) {
+                return false;
+            }
+
+            $wordCount = str_word_count($trimmedMovie);
+
+            return $wordCount > 1;
+        });
+    }
+
 }

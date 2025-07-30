@@ -39,6 +39,11 @@ class MovieRecommendationController extends AbstractController
     #[Route('/multi-word-movies', name: 'multi_word_movies', methods: ['GET'])]
     public function getMultiWordMovies(): JsonResponse
     {
-        return ApiResponse::success();
+        try {
+            $movies = $this->recommendationService->getMultiWordMovies();
+            return ApiResponse::success($movies);
+        } catch (\Throwable $e) {
+            return ApiResponse::error($e->getMessage());
+        }
     }
 }
