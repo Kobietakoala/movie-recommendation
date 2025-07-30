@@ -7,9 +7,11 @@ namespace App\Traits;
 trait ErrorMessagesTrait
 {
     /**
-     * @param string $key
-     * @return string
-     */
+    * Retrieves a localized error message based on the provided key.
+    *
+    * @param string $key The error message key (e.g., 'movies_not_found', 'invalid_movies_format')
+    * @return string The corresponding error message in Polish
+    * */
     protected function getErrorMessage(string $key): string
     {
         return match ($key) {
