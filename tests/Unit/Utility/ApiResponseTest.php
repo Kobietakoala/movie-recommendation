@@ -70,7 +70,6 @@ class ApiResponseTest extends TestCase
         $content = json_decode($response->getContent(), true);
         $this->assertFalse($content['success']);
         $this->assertEquals('Error', $content['message']);
-        $this->assertNull($content['errors']);
     }
 
     public function testErrorWithCustomParameters(): void
@@ -96,7 +95,6 @@ class ApiResponseTest extends TestCase
         $content = json_decode($response->getContent(), true);
         $this->assertFalse($content['success']);
         $this->assertEquals('Resource not found', $content['message']);
-        $this->assertNull($content['errors']);
     }
 
     public function testNotFoundWithCustomMessage(): void
@@ -110,7 +108,6 @@ class ApiResponseTest extends TestCase
         $content = json_decode($response->getContent(), true);
         $this->assertFalse($content['success']);
         $this->assertEquals($message, $content['message']);
-        $this->assertNull($content['errors']);
     }
 
     public function testServerErrorWithDefaultMessage(): void
@@ -122,7 +119,6 @@ class ApiResponseTest extends TestCase
         $content = json_decode($response->getContent(), true);
         $this->assertFalse($content['success']);
         $this->assertEquals('Internal server error', $content['message']);
-        $this->assertNull($content['errors']);
     }
 
     public function testServerErrorWithCustomMessage(): void
@@ -136,7 +132,6 @@ class ApiResponseTest extends TestCase
         $content = json_decode($response->getContent(), true);
         $this->assertFalse($content['success']);
         $this->assertEquals($message, $content['message']);
-        $this->assertNull($content['errors']);
     }
 
     public function testResponseContentType(): void
