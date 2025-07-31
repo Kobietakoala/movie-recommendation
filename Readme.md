@@ -71,3 +71,6 @@ docker-compose exec app ./vendor/bin/phpunit
 # Lokalnie
 ./vendor/bin/phpunit
 ```
+
+# Dokumentacja api
+Dokumentacja znajduje się w pliku api.json i można ją bezproblemowo importować do np. Postman

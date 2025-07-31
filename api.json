@@ -1,0 +1,254 @@
+{
+  "info": {
+    "name": "Movie Recommendation API",
+    "description": "API do rekomendacji filmów z różnymi filtrami",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Random Movies",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/random-movies",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "random-movies"
+          ]
+        },
+        "description": "Pobiera losowe filmy z bazy danych"
+      },
+      "response": [
+        {
+          "name": "Success Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/random-movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "random-movies"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"Przykładowy Film\",\n      \"year\": 2023,\n      \"genre\": \"Dramat\"\n    }\n  ]\n}"
+        },
+        {
+          "name": "Error Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/random-movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "random-movies"
+              ]
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"success\": false,\n  \"error\": \"Opis błędu\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Movies with W Even Length",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/movies-with-w-even-length",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "movies-with-w-even-length"
+          ]
+        },
+        "description": "Pobiera filmy, które mają słowa zaczynające się na 'W' o parzystej długości"
+      },
+      "response": [
+        {
+          "name": "Success Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies-with-w-even-length",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies-with-w-even-length"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 2,\n      \"title\": \"Wonder Woman\",\n      \"year\": 2017,\n      \"genre\": \"Akcja\"\n    }\n  ]\n}"
+        },
+        {
+          "name": "Error Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies-with-w-even-length",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies-with-w-even-length"
+              ]
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"success\": false,\n  \"error\": \"Opis błędu\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Multi Word Movies",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/multi-word-movies",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "multi-word-movies"
+          ]
+        },
+        "description": "Pobiera filmy z tytułami składającymi się z wielu słów"
+      },
+      "response": [
+        {
+          "name": "Success Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/multi-word-movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "multi-word-movies"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 3,\n      \"title\": \"Star Wars: Nowa Nadzieja\",\n      \"year\": 1977,\n      \"genre\": \"Sci-Fi\"\n    }\n  ]\n}"
+        },
+        {
+          "name": "Error Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/multi-word-movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "multi-word-movies"
+              ]
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"success\": false,\n  \"error\": \"Opis błędu\"\n}"
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api",
+      "description": "Bazowy URL dla API"
+    }
+  ]
+}
