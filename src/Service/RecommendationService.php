@@ -61,7 +61,7 @@ class RecommendationService
             'unique_count' => $uniqueCount,
             'duplicates_removed' => $originalCount - $uniqueCount
         ]);
-      
+
         $this->moviesLoaded = true;
     }
 
@@ -108,7 +108,6 @@ class RecommendationService
             'returned_count' => count($randomMovies),
             'movies' => $randomMovies
         ]);
-
         return $randomMovies;
     }
 
