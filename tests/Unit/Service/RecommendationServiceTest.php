@@ -67,7 +67,7 @@ class RecommendationServiceTest extends TestCase
             $this->assertEquals(
                 0,
                 mb_strlen($movie, 'UTF-8') % 2,
-                "Movie '{$movie}' does not have an even number of characters (length: " . strlen($movie) . ")"
+                "Movie '{$movie}' does not have an even number of characters (length: " . mb_strlen($movie, 'UTF-8') . ")"
             );
         }
     }
