@@ -1,4 +1,4 @@
-FROM php:8.2-cli
+FROM php:8.3-cli
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -17,18 +17,14 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash && \
 
 WORKDIR /var/www/html
 
-COPY ./composer.json ./composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
-
 COPY ./ .
 
 RUN if [ ! -f .env ]; then \
-      return "File .env not found"; \
+      echo "File .env not found"; \
+      exit 1; \
     fi
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction
-
-RUN chown -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www/html/public
 EXPOSE 8000
 
 

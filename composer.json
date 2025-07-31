@@ -4,13 +4,14 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=8.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "symfony/console": "5.4.*",
         "symfony/dotenv": "5.4.*",
         "symfony/flex": "^1.17|^2",
         "symfony/framework-bundle": "5.4.*",
+        "symfony/monolog-bundle": "^3.10",
         "symfony/runtime": "5.4.*",
         "symfony/yaml": "5.4.*"
     },
@@ -28,7 +29,9 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "classmap-authoritative": true,
+        "apcu-autoloader": true
     },
     "autoload": {
         "psr-4": {
@@ -66,4 +69,5 @@
             "require": "5.4.*"
         }
     }
+
 }
