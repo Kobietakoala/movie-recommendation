@@ -24,15 +24,4 @@ class ApiResponse
             'message' => $message,
         ], $statusCode);
     }
-
-    public static function notFound(string $message = 'Resource not found'): JsonResponse
-    {
-        return self::error($message, 404);
-    }
-
-    public static function serverError(string $message = 'Internal server error'): JsonResponse
-    {
-        return self::error($message, 500);
-    }
-
 }

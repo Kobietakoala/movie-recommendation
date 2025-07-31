@@ -1,0 +1,538 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schema.getpostman.com/json/draft-07/collection/v2.1.0/",
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Movie Recommendation API",
+    "description": "API do rekomendacji filmów z różnymi filtrami",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345678"
+  },
+  "item": [
+    {
+      "name": "Random Movies",
+      "id": "random-movies-endpoint",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text",
+            "description": "Typ odpowiedzi"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text",
+            "description": "Typ zawartości"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/random-movies",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "random-movies"
+          ],
+          "protocol": "http"
+        },
+        "description": {
+          "content": "Endpoint zwracający losowe filmy z bazy danych.\n\n**Metoda:** GET\n**URL:** `/api/random-movies`\n\n**Odpowiedź sukcesu:**\n```json\n{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"Nazwa filmu\",\n      \"year\": 2023,\n      \"genre\": \"Gatunek\"\n    }\n  ]\n}\n```",
+          "type": "text/markdown"
+        }
+      },
+      "response": [
+        {
+          "name": "Sukces - 200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/random-movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "random-movies"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Symfony/5.4.45"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Przykładowy Film\",\n            \"year\": 2023,\n            \"genre\": \"Dramat\"\n        },\n        {\n            \"id\": 2,\n            \"title\": \"Inny Film\",\n            \"year\": 2022,\n            \"genre\": \"Komedia\"\n        }\n    ]\n}",
+          "id": "random-movies-success"
+        },
+        {
+          "name": "Błąd - 500",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/random-movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "random-movies"
+              ]
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"error\": \"Wystąpił błąd podczas pobierania filmów\"\n}",
+          "id": "random-movies-error"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "test-random-movies",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is less than 3000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+              "});",
+              "",
+              "pm.test(\"Response has correct structure\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('success');",
+              "    pm.expect(jsonData).to.have.property('message');",
+              "    if (jsonData.success) {",
+              "        pm.expect(jsonData).to.have.property('data');",
+              "        pm.expect(jsonData.data).to.be.an('array');",
+              "    }",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movies with W Even Length",
+      "id": "movies-w-even-length-endpoint",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text",
+            "description": "Typ odpowiedzi"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text",
+            "description": "Typ zawartości"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/movies-with-w-even-length",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "movies-with-w-even-length"
+          ],
+          "protocol": "http"
+        },
+        "description": {
+          "content": "Endpoint zwracający filmy zawierające słowa zaczynające się na literę 'W' o parzystej długości.\n\n**Metoda:** GET\n**URL:** `/api/movies-with-w-even-length`\n\n**Przykład:** Film \"Wonder Woman\" - słowo \"Wonder\" zaczyna się na 'W' i ma 6 liter (parzysta liczba)\n\n**Odpowiedź sukcesu:**\n```json\n{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"Wonder Woman\",\n      \"year\": 2017,\n      \"genre\": \"Akcja\"\n    }\n  ]\n}\n```",
+          "type": "text/markdown"
+        }
+      },
+      "response": [
+        {
+          "name": "Sukces - 200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/movies-with-w-even-length",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "movies-with-w-even-length"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Symfony/5.4.45"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 5,\n            \"title\": \"Wonder Woman\",\n            \"year\": 2017,\n            \"genre\": \"Akcja\"\n        },\n        {\n            \"id\": 12,\n            \"title\": \"Wolverine Origins\",\n            \"year\": 2009,\n            \"genre\": \"Akcja\"\n        }\n    ]\n}",
+          "id": "movies-w-even-success"
+        },
+        {
+          "name": "Błąd - 500",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/movies-with-w-even-length",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "movies-with-w-even-length"
+              ]
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"error\": \"Wystąpił błąd podczas filtrowania filmów\"\n}",
+          "id": "movies-w-even-error"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "test-movies-w-even",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is less than 3000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+              "});",
+              "",
+              "pm.test(\"Response has correct structure\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('success');",
+              "    pm.expect(jsonData).to.have.property('message');",
+              "    if (jsonData.success) {",
+              "        pm.expect(jsonData).to.have.property('data');",
+              "        pm.expect(jsonData.data).to.be.an('object');",
+              "    }",
+              "});",
+              "",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is less than 3000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+              "});",
+              "",
+              "pm.test(\"Response has correct structure\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('success');",
+              "    pm.expect(jsonData).to.have.property('message');",
+              "    if (jsonData.success) {",
+              "        pm.expect(jsonData).to.have.property('data');",
+              "        pm.expect(jsonData.data).to.be.an('object');",
+              "    }",
+              "});",
+              "",
+              "pm.test(\"All movies start with W and have even length\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    if (jsonData.success && jsonData.data) {",
+              "        var movieTitles = Object.values(jsonData.data);",
+              "        if (movieTitles.length > 0) {",
+              "            movieTitles.forEach(function(movieTitle) {",
+              "                pm.expect(movieTitle).to.be.a('string');",
+              "                ",
+              "                // Sprawdź czy zaczyna się na W",
+              "                var startsWithW = movieTitle.toLowerCase().charAt(0) === 'w';",
+              "                pm.expect(startsWithW, `Movie \"${movieTitle}\" should start with 'W'`).to.be.true;",
+              "                ",
+              "                // Sprawdź czy ma parzystą długość",
+              "                var hasEvenLength = movieTitle.length % 2 === 0;",
+              "                pm.expect(startsWithW && hasEvenLength, `Movie \"${movieTitle}\" should start with 'W' and have even length (${movieTitle.length})`).to.be.true;",
+              "            });",
+              "        }",
+              "    }",
+              "});",
+              "",
+              "pm.test(\"Data contains movie titles\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    if (jsonData.success && jsonData.data) {",
+              "        var movieCount = Object.keys(jsonData.data).length;",
+              "        pm.expect(movieCount).to.be.greaterThan(0, \"Should return at least one movie starting with W and having even length\");",
+              "    }",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Multi Word Movies",
+      "id": "multi-word-movies-endpoint",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text",
+            "description": "Typ odpowiedzi"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text",
+            "description": "Typ zawartości"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/multi-word-movies",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "multi-word-movies"
+          ],
+          "protocol": "http"
+        },
+        "description": {
+          "content": "Endpoint zwracający filmy z tytułami składającymi się z wielu słów (więcej niż jedno słowo).\n\n**Metoda:** GET\n**URL:** `/api/multi-word-movies`\n\n**Przykład:** \"Star Wars\", \"Iron Man\", \"The Dark Knight\"\n\n**Odpowiedź sukcesu:**\n```json\n{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"Star Wars: Nowa Nadzieja\",\n      \"year\": 1977,\n      \"genre\": \"Sci-Fi\"\n    }\n  ]\n}\n```",
+          "type": "text/markdown"
+        }
+      },
+      "response": [
+        {
+          "name": "Sukces - 200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/multi-word-movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "multi-word-movies"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Symfony/5.4.45"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 3,\n            \"title\": \"Star Wars: Nowa Nadzieja\",\n            \"year\": 1977,\n            \"genre\": \"Sci-Fi\"\n        },\n        {\n            \"id\": 7,\n            \"title\": \"Iron Man\",\n            \"year\": 2008,\n            \"genre\": \"Akcja\"\n        },\n        {\n            \"id\": 15,\n            \"title\": \"The Dark Knight\",\n            \"year\": 2008,\n            \"genre\": \"Thriller\"\n        }\n    ]\n}",
+          "id": "multi-word-movies-success"
+        },
+        {
+          "name": "Błąd - 500",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/multi-word-movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "multi-word-movies"
+              ]
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"error\": \"Wystąpił błąd podczas wyszukiwania wielosłownych filmów\"\n}",
+          "id": "multi-word-movies-error"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "test-multi-word-movies",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is less than 3000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+              "});",
+              "",
+              "pm.test(\"Response has correct structure\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('success');",
+              "    pm.expect(jsonData).to.have.property('message');",
+              "    if (jsonData.success) {",
+              "        pm.expect(jsonData).to.have.property('data');",
+              "        pm.expect(jsonData.data).to.be.an('object');",
+              "    }",
+              "});",
+              "",
+              "pm.test(\"All movie titles have multiple words\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    if (jsonData.success && jsonData.data.length > 0) {",
+              "        var movieTitles = Object.values(jsonData.data);",
+              "        if (movieTitles.length > 0) {",
+              "            movieTitles.forEach(function(movieTitle) {",
+              "               pm.expect(movieTitle).to.be.a('string');",
+              "               var wordCount = movieTitle.trim().split(/\\s+/).length;",
+              "               pm.expect(wordCount).to.be.greaterThan(1,",
+              "               `Movie \"${movieTitle}\" should have multiple words but has ${wordCount} word(s)`",
+              "               );",
+              "        })",
+              "    }}",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "global-prerequest",
+        "exec": [
+          "// Globalne ustawienia przed requestem",
+          "console.log('Wykonywanie requesta do Movie Recommendation API');"
+        ],
+        "type": "text/javascript"
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "global-test",
+        "exec": [
+          "// Globalne testy",
+          "pm.test(\"Response is JSON\", function () {",
+          "    pm.response.to.be.json;",
+          "});"
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "base-url-var",
+      "key": "base_url",
+      "value": "localhost:8000",
+      "type": "string",
+      "description": "Bazowy URL dla Movie Recommendation API"
+    }
+  ]
+}
