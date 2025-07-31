@@ -14,11 +14,13 @@ class RecommendationServiceTest extends TestCase
 {
     private RecommendationService $recommendationService;
     private LoggerInterface $logger;
+    private string $moviesPath;
 
     protected function setUp(): void
     {
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->recommendationService = new RecommendationService($this->logger);
+        $this->moviesPath = __DIR__ . '/../../../data/movies.php';
+        $this->recommendationService = new RecommendationService($this->logger, $this->moviesPath);
     }
 
     public function testGetRandomMoviesReturnsThreeRandomTitles(): void

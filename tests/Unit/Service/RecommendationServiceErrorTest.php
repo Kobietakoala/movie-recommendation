@@ -68,7 +68,7 @@ class RecommendationServiceErrorTest extends TestCase
     public function testLoadMoviesThrowsExceptionWhenFileNotExists(): void
     {
         $this->moveMoviesFileToBackup();
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('File data/movies.php not found');
@@ -82,7 +82,7 @@ class RecommendationServiceErrorTest extends TestCase
 
     public function testGetRandomMoviesThrowsExceptionForNegativeCount(): void
     {
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Number of movies to retrieve must be greater than 0');
@@ -91,10 +91,8 @@ class RecommendationServiceErrorTest extends TestCase
 
     public function testGetRandomMoviesThrowsExceptionForZeroCount(): void
     {
-        // Arrange
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
 
-        // Assert & Act
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Number of movies to retrieve must be greater than 0');
         $service->getRandomMovies(0);
@@ -111,7 +109,7 @@ class RecommendationServiceErrorTest extends TestCase
                 $this->arrayHasKey('file_path')
             );
 
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
 
         try {
             $service->getRandomMovies();
@@ -125,7 +123,7 @@ class RecommendationServiceErrorTest extends TestCase
 
     public function testServiceUsesErrorMessagesTrait(): void
     {
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
         $reflection = new ReflectionClass($service);
 
         $this->assertTrue(
@@ -139,7 +137,7 @@ class RecommendationServiceErrorTest extends TestCase
         $this->moveMoviesFileToBackup();
         $this->createMoviesFileWithContent('<?php $invalidData = "not an array";');
 
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Could not find $movies array in movies.php file');
@@ -153,7 +151,7 @@ class RecommendationServiceErrorTest extends TestCase
 
     public function testGetRandomMoviesReturnsAllWhenCountExceedsAvailable(): void
     {
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
 
         $result = $service->getRandomMovies(1000);
 
@@ -167,7 +165,7 @@ class RecommendationServiceErrorTest extends TestCase
         $this->moveMoviesFileToBackup();
         $this->createMoviesFileWithContent('<?php $movies = [];');
 
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
 
         $result = $service->getRandomMovies();
 
@@ -182,7 +180,7 @@ class RecommendationServiceErrorTest extends TestCase
         $this->logger->expects($this->atLeastOnce())
             ->method('info');
 
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
 
         $service->getRandomMovies();
 
@@ -198,7 +196,7 @@ class RecommendationServiceErrorTest extends TestCase
             ->method('warning')
             ->with('No movies available for random selection');
 
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
 
         $service->getRandomMovies();
 
@@ -210,7 +208,7 @@ class RecommendationServiceErrorTest extends TestCase
         $this->moveMoviesFileToBackup();
         $this->createMoviesFileWithContent('<?php $movies = [];');
 
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
 
         $randomMovies = $service->getRandomMovies();
         $wEvenMovies = $service->getMoviesWithWEvenLength();
@@ -231,7 +229,7 @@ class RecommendationServiceErrorTest extends TestCase
         $this->moveMoviesFileToBackup();
         $this->createMoviesFileWithContent('<?php $movies = ["valid movie", null, "", 123, []];');
 
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
 
         try {
             // Methods should filter out invalid data
@@ -258,7 +256,7 @@ class RecommendationServiceErrorTest extends TestCase
     public function testCanReloadMoviesAfterError(): void
     {
         $this->moveMoviesFileToBackup();
-        $service = new RecommendationService($this->logger);
+        $service = new RecommendationService($this->logger, $this->originalPath);
 
         try {
             $service->getRandomMovies();

@@ -51,10 +51,10 @@ class ErrorMessagesTraitTest extends TestCase
         $this->assertEquals($expectedMessage, $result);
     }
 
-    public function testShouldReturnCorrectErrorMessageForInternalError(): void
+    public function testShouldReturnCorrectErrorMessageForMoviesPathNotFoundError(): void
     {
-        $key = 'internal';
-        $expectedMessage = 'An unexpected error occurred.';
+        $key = 'movies_path_not_found';
+        $expectedMessage = 'Path to movies.php file not found';
 
         $result = $this->traitObject->getErrorMessagePublic($key);
         $this->assertEquals($expectedMessage, $result);
@@ -141,7 +141,7 @@ class ErrorMessagesTraitTest extends TestCase
             ['movies_not_found', 'File data/movies.php not found'],
             ['invalid_movies_format', 'Could not find $movies array in movies.php file'],
             ['non_positive_movie_count', 'Number of movies to retrieve must be greater than 0'],
-            ['internal', 'An unexpected error occurred.'],
+            ['movies_path_not_found', 'Path to movies.php file not found'],
             ['unknown_key', 'Unknown error'],
         ];
     }
