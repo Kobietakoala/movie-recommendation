@@ -15,9 +15,14 @@ class RecommendationService
     use ErrorMessagesTrait;
     private array $movies = [];
     private bool $moviesLoaded = false;
-    protected const string MOVIES_FILE_PATH = __DIR__ . '/../../data/movies.php';
+    protected ?string $moviesFilePath;
 
-    public function __construct(private readonly LoggerInterface $logger) { }
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly string $moviesPath
+    ) {
+        $this->moviesFilePath = $moviesPath;
+    }
 
     /**
      * @return void
@@ -25,28 +30,32 @@ class RecommendationService
      */
     private function loadMovies(): void
     {
+        if (is_null($this->moviesFilePath)) {
+            $this->logger->critical($this->getErrorMessage('movies_path_not_found'));
+        }
+
         if ($this->moviesLoaded) {
             $this->logger->debug('Movies already loaded, skipping reload');
             return;
         }
 
-        $this->logger->info('Starting to load movies from file', ['file_path' => self::MOVIES_FILE_PATH]);
+        $this->logger->info('Starting to load movies from file', ['file_path' => $this->moviesFilePath]);
 
-        if (!file_exists(self::MOVIES_FILE_PATH)) {
+        if (!file_exists($this->moviesFilePath)) {
             $errorMessage = $this->getErrorMessage('movies_not_found');
             $this->logger->error('Movies file not found', [
-                'file_path' => self::MOVIES_FILE_PATH,
+                'file_path' => $this->moviesFilePath,
                 'error_message' => $errorMessage
             ]);
             throw new \RuntimeException($errorMessage);
         }
 
-        include self::MOVIES_FILE_PATH;
+        include $this->moviesFilePath;
         
         if (!isset($movies) || !is_array($movies)) {
             $errorMessage = $this->getErrorMessage('invalid_movies_format');
             $this->logger->error('Invalid movies format in file', [
-                'file_path' => self::MOVIES_FILE_PATH,
+                'file_path' => $this->moviesFilePath,
                 'error_message' => $errorMessage
             ]);
             throw new \RuntimeException($errorMessage);
