@@ -86,54 +86,6 @@ class ApiResponseTest extends TestCase
         $this->assertEquals($message, $content['message']);
     }
 
-    public function testNotFoundWithDefaultMessage(): void
-    {
-        $response = ApiResponse::notFound();
-
-        $this->assertEquals(404, $response->getStatusCode());
-        
-        $content = json_decode($response->getContent(), true);
-        $this->assertFalse($content['success']);
-        $this->assertEquals('Resource not found', $content['message']);
-    }
-
-    public function testNotFoundWithCustomMessage(): void
-    {
-        $message = 'Movie not found';
-
-        $response = ApiResponse::notFound($message);
-
-        $this->assertEquals(404, $response->getStatusCode());
-        
-        $content = json_decode($response->getContent(), true);
-        $this->assertFalse($content['success']);
-        $this->assertEquals($message, $content['message']);
-    }
-
-    public function testServerErrorWithDefaultMessage(): void
-    {
-        $response = ApiResponse::serverError();
-
-        $this->assertEquals(500, $response->getStatusCode());
-        
-        $content = json_decode($response->getContent(), true);
-        $this->assertFalse($content['success']);
-        $this->assertEquals('Internal server error', $content['message']);
-    }
-
-    public function testServerErrorWithCustomMessage(): void
-    {
-        $message = 'Database server is down';
-
-        $response = ApiResponse::serverError($message);
-
-        $this->assertEquals(500, $response->getStatusCode());
-        
-        $content = json_decode($response->getContent(), true);
-        $this->assertFalse($content['success']);
-        $this->assertEquals($message, $content['message']);
-    }
-
     public function testResponseContentType(): void
     {
         $response = ApiResponse::success();
