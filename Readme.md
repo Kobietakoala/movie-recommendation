@@ -27,6 +27,15 @@ Aplikacja do rekomendacji filmów zbudowana w frameworku Symfony 5.4.
 - **Logging**: Monolog
 - **Containeryzacja**: Docker
 
+# Dokumentacja api
+Dokumentacja znajduje się w pliku api.json i można ją bezproblemowo importować do np. Postman
+
+# Algorytmy
+`RecommendationService::getRandomMovies` - Zwracane są 3 losowe tytuły. \
+`RecommendationService::getMoviesWithWEvenLength` - Zwracane są wszystkie filmy na literę ‘W’ ale tylko jeśli mają parzystą liczbę znaków w tytule. 
+Uwaga, spacje są wliczane \
+`RecommendationService::getMultiWordMovies` - Zwracany są wszystkie tytuły, które składają się z więcej niż 1 słowa.
+
 # Instalacja i uruchomienie
 
 ## 1. Klonowanie repozytorium
@@ -71,6 +80,3 @@ docker-compose exec app ./vendor/bin/phpunit
 # Lokalnie
 ./vendor/bin/phpunit
 ```
-
-# Dokumentacja api
-Dokumentacja znajduje się w pliku api.json i można ją bezproblemowo importować do np. Postman
