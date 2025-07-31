@@ -30,8 +30,11 @@ Aplikacja do rekomendacji filmów zbudowana w frameworku Symfony 5.4.
 # Instalacja i uruchomienie
 
 ## 1. Klonowanie repozytorium
-bash git clone https://github.com/Kobietakoala/movie-recommendation \
+
+```bash 
+git clone https://github.com/Kobietakoala/movie-recommendation 
 cd movie-recommendation
+```
 
 ## 2. Konfiguracja środowiska
 
