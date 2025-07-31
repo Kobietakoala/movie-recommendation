@@ -53,16 +53,56 @@ class RecommendationService
         }
 
         $originalCount = count($movies);
-        $this->movies = array_unique($movies);
+
+        $sanitizedMovies = $this->sanitizeMovies($movies);
+        $sanitizedCount = count($sanitizedMovies);
+        $this->movies = array_unique($sanitizedMovies);
         $uniqueCount = count($this->movies);
         
         $this->logger->info('Movies loaded successfully', [
             'original_count' => $originalCount,
+            'sanitized_count' => $sanitizedCount,
             'unique_count' => $uniqueCount,
-            'duplicates_removed' => $originalCount - $uniqueCount
+            'invalid_entries_removed' => $originalCount - $sanitizedCount,
+            'duplicates_removed' => $sanitizedCount - $uniqueCount
         ]);
 
         $this->moviesLoaded = true;
+    }
+
+    private function isValidMovie($movie): bool
+    {
+        return is_string($movie) && trim($movie) !== '';
+    }
+
+    private function sanitizeMovies(array $movies): array
+    {
+        $validMovies = [];
+        $invalidCount = 0;
+
+        foreach ($movies as $movie) {
+            if ($this->isValidMovie($movie)) {
+                $trimmedMovie = trim($movie);
+                $validMovies[] = $trimmedMovie;
+            } else {
+                $invalidCount++;
+                if ($this->logger instanceof Logger && $this->logger->isHandling(Logger::DEBUG)) {
+                    $this->logger->debug('Skipping invalid movie entry during load', [
+                        'movie' => $movie,
+                        'type' => gettype($movie)
+                    ]);
+                }
+            }
+        }
+
+        if ($invalidCount > 0) {
+            $this->logger->warning('Found invalid movie entries during load', [
+                'invalid_count' => $invalidCount,
+                'valid_count' => count($validMovies)
+            ]);
+        }
+
+        return $validMovies;
     }
 
     /**
@@ -139,7 +179,7 @@ class RecommendationService
             }
 
             $startsWithW = strtolower($movie[0]) === 'w';
-            $hasEvenLength = strlen($movie) % 2 === 0;
+            $hasEvenLength = mb_strlen($movie, 'UTF-8') % 2 === 0;
             $matches = $startsWithW && $hasEvenLength;
 
             if ($matches) {
