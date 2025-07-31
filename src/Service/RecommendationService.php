@@ -140,7 +140,7 @@ class RecommendationService
             }
 
             $startsWithW = strtolower($movie[0]) === 'w';
-            $hasEvenLength = strlen($movie) % 2 === 0;
+            $hasEvenLength = mb_strlen($movie, 'UTF-8') % 2 === 0;
             $matches = $startsWithW && $hasEvenLength;
 
             if ($matches) {
